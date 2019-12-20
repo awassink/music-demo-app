@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+   cddb-mysql:
+     image: mysql:5.7
+     volumes:
+       - db_data:/var/lib/mysql
+     ports:
+       - "3306:3306"
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: root_pw
+       MYSQL_DATABASE: cddb_quintor
+       MYSQL_USER: cddb_quintor
+       MYSQL_PASSWORD: quintor_pw
+
+   cddb-backend:
+     depends_on:
+       - cddb-mysql
+     image: awassink/music-app-be:v1
+     ports:
+       - "8080:8080"
+     restart: always
+
+   cddb-frontend:
+     depends_on:
+       - cddb-backend
+     image: awassink/music-app-fe:v1
+     ports:
+       - "888:80"
+     restart: always
+volumes:
+    db_data:
