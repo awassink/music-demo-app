@@ -58,3 +58,6 @@ docker-compose down
 
 ### Running your own build images
 If you've build you own docker images for the frontend and/or backend you can adapt the `image` properties accordingly in the `docker-compose.yml`.
+
+## Next steps
+[Running the music demo application on AWS](AWS-EC2.md)
