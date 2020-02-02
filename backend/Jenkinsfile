@@ -12,11 +12,12 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
-  - name: docker
-    image: buildah/buildah
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:v0.16.0
+    imagePullPolicy: Always
+    command:
+    - /busybox/cat
     tty: true
-    securityContext:
-      privileged: true
 """
     }
   }
@@ -46,9 +47,9 @@ spec:
     }
     stage('Building image') {
       steps{
-        container('docker') {
+        container('kaniko') {
           dir ("backend") {
-            sh "buildah bud -t $registry:$BUILD_NUMBER ."
+            sh "/kaniko/executor -f `pwd`/Dockerfile -c `pwd`"
           }
         }
       }
