@@ -16,6 +16,8 @@ spec:
     image: docker:dind
     command: ['cat']
     tty: true
+    securityContext:
+      privileged: true
 """
     }
   }
