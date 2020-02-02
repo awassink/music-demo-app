@@ -13,7 +13,7 @@ pipeline {
         git 'https://github.com/awassink/music-demo-app.git'
 
         // Run Maven on a Unix agent.
-        sh "mvn clean package"
+        sh "cd backend; mvn clean package"
       }
 
       post {
@@ -21,7 +21,7 @@ pipeline {
         // failed, record the test results and archive the jar file.
         success {
           junit '**/target/surefire-reports/TEST-*.xml'
-          archiveArtifacts 'target/*.war'
+          archiveArtifacts 'backend/target/*.war'
         }
       }
     }
