@@ -1,16 +1,19 @@
-podTemplate(containers: [
-  containerTemplate(name: 'maven', image: 'maven:3.3.9-jdk-8-alpine', ttyEnabled: true, command: 'cat')
-]) {
+pipeline {
+  agent any
 
-  node(POD_LABEL) {
+  tools {
+    // Install the Maven version configured as "M3" and add it to the path.
+    maven "M3"
+  }
+
+  stages {
     stage('Build') {
       steps {
         // Get some code from a GitHub repository
         git 'https://github.com/awassink/music-demo-app.git'
-        container('maven') {
-          // Run Maven on a Unix agent.
-          sh "cd backend; mvn clean package"
-        }
+
+        // Run Maven on a Unix agent.
+        sh "cd backend; mvn clean package"
       }
 
       post {
