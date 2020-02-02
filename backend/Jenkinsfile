@@ -13,18 +13,10 @@ kind: Pod
 spec:
   containers:
   - name: docker
-    image: docker:dind
-    command: ['cat']
+    image: buildah/buildah
     tty: true
     securityContext:
       privileged: true
-    volumeMounts:
-    - name: dockersock
-      mountPath: /var/run/docker.sock
-  volumes:
-  - name: dockersock
-    hostPath:
-      path: /var/run/docker.sock
 """
     }
   }
@@ -56,9 +48,7 @@ spec:
       steps{
         container('docker') {
           dir ("backend") {
-            script {
-              docker.build registry + ":$BUILD_NUMBER"
-            }
+            sh "buildah bud -t $registry:$BUILD_NUMBER ."
           }
         }
       }
