@@ -3,7 +3,29 @@ pipeline {
     registry = "awassink/docker-test"
     registryCredential = "dockerhub"
   }
-  agent any
+  agent {
+    kubernetes {
+      //cloud 'kubernetes'
+      label 'mypod'
+      yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: docker
+    image: docker:1.11
+    command: ['cat']
+    tty: true
+    volumeMounts:
+    - name: dockersock
+      mountPath: /var/run/docker.sock
+  volumes:
+  - name: dockersock
+    hostPath:
+      path: /var/run/docker.sock
+"""
+    }
+  }
 
   tools {
     // Install the Maven version configured as "M3" and add it to the path.
@@ -30,9 +52,11 @@ pipeline {
     }
     stage('Building image') {
       steps{
-        script {
-          sh "cd backend"
-          docker.build registry + ":$BUILD_NUMBER"
+        container('docker') {
+          script {
+            sh "cd backend"
+            docker.build registry + ":$BUILD_NUMBER"
+          }
         }
       }
     }
