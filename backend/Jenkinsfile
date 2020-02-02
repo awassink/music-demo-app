@@ -53,9 +53,10 @@ spec:
     stage('Building image') {
       steps{
         container('docker') {
-          script {
-            sh "cd backend"
-            docker.build registry + ":$BUILD_NUMBER"
+          dir ("backend") {
+            script {
+              docker.build registry + ":$BUILD_NUMBER"
+            }
           }
         }
       }
