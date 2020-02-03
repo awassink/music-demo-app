@@ -13,8 +13,10 @@ kind: Pod
 spec:
   containers:
   - name: kaniko
-    image: gcr.io/kaniko-project/executor:v0.16.0
+    image: gcr.io/kaniko-project/executor:debug
     imagePullPolicy: Always
+    command:
+    - /busybox/cat
     tty: true
 """
     }
