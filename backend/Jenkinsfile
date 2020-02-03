@@ -50,7 +50,7 @@ spec:
         container(name: 'kaniko', shell: '/busybox/sh') {
           dir ("backend") {
             sh '''#!/busybox/sh
-            /kaniko/executor -f `pwd`/Dockerfile -c `pwd` --verbosity debug
+            /kaniko/executor -f `pwd`/Dockerfile -c `pwd` --verbosity debug --no-push
             '''
           }
         }
