@@ -47,9 +47,11 @@ spec:
     }
     stage('Building image') {
       steps{
-        container('kaniko') {
+        container(name: 'kaniko', shell: '/busybox/sh') {
           dir ("backend") {
-            sh "/kaniko/executor -f `pwd`/Dockerfile -c `pwd`"
+            sh '''#!/busybox/sh
+            /kaniko/executor -f `pwd`/Dockerfile -c `pwd` --verbosity debug
+            '''
           }
         }
       }
