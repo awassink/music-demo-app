@@ -64,6 +64,8 @@ spec:
           container(name: 'kaniko') {
             sh '''
             cd backend
+            ls -al
+            ls -al target
             /kaniko/executor --dockerfile ./Dockerfile --context . --no-push
             '''
           }
