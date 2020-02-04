@@ -30,6 +30,9 @@ spec:
 """
     }
   }
+  script {
+    System.setProperty("org.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS", "true");
+  }
 
   tools {
     // Install the Maven version configured as "M3" and add it to the path.
