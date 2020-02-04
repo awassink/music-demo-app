@@ -64,9 +64,11 @@ spec:
           container(name: 'kaniko') {
             sh '''
             cd backend
+            pwd
             ls -al
             ls -al target
-            /kaniko/executor --dockerfile ./Dockerfile --context . --no-push
+            cat Dockerfile
+            /kaniko/executor --dockerfile `pwd`/Dockerfile --context `pwd` --no-push
             '''
           }
         }
