@@ -30,9 +30,6 @@ spec:
 """
     }
   }
-  script {
-    System.setProperty("org.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS", "true");
-  }
 
   tools {
     // Install the Maven version configured as "M3" and add it to the path.
@@ -59,10 +56,13 @@ spec:
     }
     stage('Building image') {
       steps{
-        container(name: 'kaniko') {
+        script {
+          System.setProperty("org.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS", "true");
+          container(name: 'kaniko') {
             sh '''
             /kaniko/executor --dockerfile `pwd`/Dockerfile --context `pwd` --destination=204321321492.dkr.ecr.us-west-2.amazonaws.com/mucis-app-be:latest --destination=123456789498.dkr.ecr.us-west-2.amazonaws.com/mucis-app-be:v$BUILD_NUMBER
             '''
+          }
         }
       }
     }
