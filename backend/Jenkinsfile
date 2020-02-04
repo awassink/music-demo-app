@@ -6,7 +6,7 @@ pipeline {
   agent {
     kubernetes {
       //cloud 'kubernetes'
-      label 'mypod'
+      label 'music-app-agent'
       yaml """
 apiVersion: v1
 kind: Pod
@@ -23,6 +23,12 @@ spec:
     volumeMounts:
       - name: docker-config
         mountPath: /kaniko/.docker
+  - name: maven
+    image: maven:3.6.0-jdk-8-alpine
+    imagePullPolicy: Always
+    command:
+    - cat
+    tty: true
   volumes:
     - name: docker-config
       configMap:
@@ -31,19 +37,16 @@ spec:
     }
   }
 
-  tools {
-    // Install the Maven version configured as "M3" and add it to the path.
-    maven "M3"
-  }
-
   stages {
     stage('Build application') {
       steps {
-        // Get some code from a GitHub repository
-        git 'https://github.com/awassink/music-demo-app.git'
+        container (maven) {
+          // Get some code from a GitHub repository
+          git 'https://github.com/awassink/music-demo-app.git'
 
-        // Run Maven on a Unix agent.
-        sh "cd backend; mvn clean package"
+          // Run Maven on a Unix agent.
+          sh "cd backend; mvn clean package"
+        }
       }
 
       post {
