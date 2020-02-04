@@ -42,7 +42,7 @@ spec:
       steps {
         container (name: 'maven') {
           // Get some code from a GitHub repository
-          git 'https://github.com/awassink/music-demo-app.git'
+          git branch: 'jenkins', url: 'https://github.com/awassink/music-demo-app.git'
 
           // Run Maven on a Unix agent.
           sh "cd backend; mvn clean package"
