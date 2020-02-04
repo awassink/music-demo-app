@@ -18,7 +18,7 @@ spec:
     image: gcr.io/kaniko-project/executor:debug-539ddefcae3fd6b411a95982a830d987f4214251
     imagePullPolicy: Always
     command:
-    - /busybox/sh
+    - /busybox/cat
     tty: true
     volumeMounts:
       - name: docker-config
@@ -35,10 +35,6 @@ spec:
         name: docker-config
 """
     }
-  }
-  tools {
-    // Install the Maven version configured as "M3" and add it to the path.
-    maven "M3"
   }
 
   stages {
@@ -67,7 +63,8 @@ spec:
           System.setProperty("org.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS", "true");
           container(name: 'kaniko') {
             sh '''
-            /kaniko/executor --dockerfile `pwd`/Dockerfile --context `pwd` --destination=204321321492.dkr.ecr.us-west-2.amazonaws.com/mucis-app-be:latest --destination=123456789498.dkr.ecr.us-west-2.amazonaws.com/mucis-app-be:v$BUILD_NUMBER
+            cd backend
+            /kaniko/executor --dockerfile ./Dockerfile --context . --no-push
             '''
           }
         }
