@@ -68,7 +68,7 @@ spec:
             ls -al
             ls -al target
             cat Dockerfile
-            /kaniko/executor --dockerfile `pwd`/Dockerfile --context `pwd` --no-push
+            /kaniko/executor --dockerfile Dockerfile --context . --no-push
             '''
           }
         }
