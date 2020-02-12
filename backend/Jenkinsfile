@@ -25,6 +25,7 @@ spec:
     volumeMounts:
       - name: docker-config
         mountPath: /kaniko/.docker
+        readOnly: true
   - name: maven
     image: maven:3.6.0-jdk-8-alpine
     imagePullPolicy: Always
@@ -33,8 +34,8 @@ spec:
     tty: true
   volumes:
     - name: docker-config
-      configMap:
-        name: docker-config
+      secret:
+        secretName: docker-config-nexus
 """
     }
   }
@@ -64,7 +65,7 @@ spec:
         container(name: 'kaniko') {
           sh '''
           cd backend
-          /kaniko/executor --dockerfile Dockerfile --context `pwd` --destination 204321321492.dkr.ecr.eu-west-1.amazonaws.com/devops30:latest
+          /kaniko/executor --dockerfile Dockerfile --context `pwd` --destination docker-nexus.devops-labs.it/test:latest
           '''
         }
       }
