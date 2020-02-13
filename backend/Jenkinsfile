@@ -5,7 +5,7 @@ pipeline {
   }
   agent {
     kubernetes {
-      //cloud 'kubernetes'
+      cloud 'k8s-devops17'
       label 'music-app-agent'
       serviceAccount 'jenkins'
       yaml """
@@ -64,7 +64,7 @@ spec:
         container(name: 'kaniko') {
           sh '''
           cd backend
-          /kaniko/executor --dockerfile Dockerfile --context `pwd` --destination 204321321492.dkr.ecr.eu-west-1.amazonaws.com/devops30:latest
+          /kaniko/executor --dockerfile Dockerfile --context `pwd` --destination 204321321492.dkr.ecr.eu-west-1.amazonaws.com/devops17:latest
           '''
         }
       }
