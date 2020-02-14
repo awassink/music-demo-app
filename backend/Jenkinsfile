@@ -50,7 +50,7 @@ spec:
       steps {
         container (name: 'maven') {
           // Get some code from a GitHub repository
-          git branch: 'jenkins', url: 'https://github.com/awassink/music-demo-app.git'
+          git branch: 'helm-17-test', url: 'https://github.com/awassink/music-demo-app.git'
 
           // Run Maven on a Unix agent.
           sh "cd backend; mvn clean package"
@@ -81,6 +81,8 @@ spec:
           sh '''
           helm version
           helm ls
+          cd backend/music-app-backend
+          helm upgrade --install music-app-17 .
           '''
         }
       }

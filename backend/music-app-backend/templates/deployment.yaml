@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: cddb-backend
+    visualize: "true"
+    uses: "cddb-mysql"
+  name: cddb-backend
+  namespace: jenkins-devops01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:    
+      containers:
+        - image: 204321321492.dkr.ecr.eu-west-1.amazonaws.com/devops17:latest
+          name: cddb-backend  
+          ports:
+          - containerPort: 8080
