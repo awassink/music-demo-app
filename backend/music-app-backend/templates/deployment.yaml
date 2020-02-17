@@ -17,7 +17,7 @@ spec:
         app: backend
     spec:    
       containers:
-        - image: 204321321492.dkr.ecr.eu-west-1.amazonaws.com/devops17:latest
+        - image: 204321321492.dkr.ecr.eu-west-1.amazonaws.com/devops17/music-app-backend:latest
           name: cddb-backend  
           ports:
           - containerPort: 8080

@@ -70,7 +70,7 @@ spec:
         container(name: 'kaniko') {
           sh '''
           cd backend
-          /kaniko/executor --dockerfile Dockerfile --context `pwd` --destination 204321321492.dkr.ecr.eu-west-1.amazonaws.com/devops17:latest
+          /kaniko/executor --dockerfile Dockerfile --context `pwd` --destination 204321321492.dkr.ecr.eu-west-1.amazonaws.com/devops17/music-app-backend:latest
           '''
         }
       }
