@@ -32,7 +32,7 @@ spec:
     - cat
     tty: true
   - name: helm
-    image: lachlanevenson/k8s-helm:v2.16.3
+    image: lachlanevenson/k8s-helm:v3.1.0
     imagePullPolicy: Always
     command:
     - cat
@@ -82,7 +82,7 @@ spec:
           helm version
           helm ls
           cd backend/music-app-backend
-          helm upgrade --install music-app-17 .
+          helm upgrade -i music-app-17 .
           '''
         }
       }

@@ -6,7 +6,6 @@ metadata:
     visualize: "true"
     uses: "cddb-mysql"
   name: cddb-backend
-  namespace: jenkins-devops01
 spec:
   replicas: 1
   selector:
