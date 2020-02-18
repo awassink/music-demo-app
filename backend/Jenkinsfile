@@ -82,7 +82,7 @@ spec:
           helm version
           helm ls
           cd backend/music-app-backend
-          helm upgrade -i music-app-17 .
+          helm upgrade -i --namespace staging-devops17 music-app-17 .
           '''
         }
       }
